@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CheetaryStats133 - Subscribers</title>
+    <title>HuntingStats378 - Subscribers</title>
     <link href="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.css" rel="stylesheet">
     <link rel="icon" href="https://huntingstats378.github.io/HuntingStats378/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
@@ -19,15 +19,25 @@
             align-items: center;
             min-height: 100vh;
         }
+        .orange-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color, #E7541E);
+            z-index: -1;
+        }
         .container {
             text-align: center;
             padding: 20px;
             background-color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            width: 320px;
-            max-width: 90%;
+            width: 90%;
+            max-width: 400px; /* Adjust max-width as needed */
             position: relative;
+            z-index: 1;
         }
         .avatar {
             width: 120px;
@@ -69,21 +79,28 @@
             font-size: 1rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s;
+            z-index: 2; /* Ensure button is above gray box */
         }
         .switch-btn:hover {
             background-color: #0056b3;
         }
+        .chart {
+            background-color: black;
+            margin-top: 20px;
+            height: 300px; /* Adjust height as needed */
+        }
     </style>
 </head>
 <body>
+    <div class="orange-background"></div>
     <div class="container">
         <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
-        <img class="avatar" id="image" src="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj" alt="Channel Avatar">
+        <img class="avatar" id="image" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
         <h1 id="name">Loading...</h1>
         <h2 id="subs" class="odometer">0</h2>
         <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
     </div>
-    <div id="chart" class="chart" style="background-color: black;"></div>
+    <div id="chart" class="chart"></div>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.js"></script>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/highstock.js"></script>
     <script>
