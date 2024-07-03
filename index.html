@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HuntingStats378 - Subscribers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.css" rel="stylesheet">
+    <link rel="icon" href="https://huntingstats378.github.io/HuntingStats378/main/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #E7541E;
-            color: #fff;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: var(--fg-color, #fff);
+            background-color: var(--bg-color, #E7541E);
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
             text-align: center;
@@ -81,6 +83,7 @@
         <h2 id="subs" class="odometer">0</h2>
         <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
     </div>
+    <div id="chart" class="chart" style="background-color: black;"></div>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.js"></script>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/highstock.js"></script>
     <script>
@@ -94,6 +97,8 @@
                     document.getElementById("image").src = data.snippet.thumbnails.high.url;
                     document.getElementById("name").textContent = data.snippet.title;
                     document.getElementById("subs").innerHTML = data.estSubCount;
+                    if (chart.series[0].points.length == 1500) chart.series[0].data[0].remove();
+                    chart.series[0].addPoint([Date.now(), data.estSubCount]);
                 });
         }
 
