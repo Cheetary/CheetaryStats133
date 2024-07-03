@@ -19,6 +19,15 @@
             align-items: center;
             min-height: 100vh;
         }
+        .orange-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color, #E7541E);
+            z-index: -1;
+        }
         .container {
             text-align: center;
             padding: 20px;
@@ -28,6 +37,7 @@
             width: 90%;
             max-width: 400px; /* Adjust max-width as needed */
             position: relative;
+            z-index: 1;
         }
         .avatar {
             width: 120px;
@@ -69,6 +79,7 @@
             font-size: 1rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s;
+            z-index: 2; /* Ensure button is above gray box */
         }
         .switch-btn:hover {
             background-color: #0056b3;
@@ -81,6 +92,7 @@
     </style>
 </head>
 <body>
+    <div class="orange-background"></div>
     <div class="container">
         <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
         <img class="avatar" id="image" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
