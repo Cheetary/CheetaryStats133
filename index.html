@@ -25,6 +25,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             width: 320px;
             max-width: 90%;
+            position: relative;
         }
         .avatar {
             width: 120px;
@@ -53,21 +54,40 @@
             color: #ddd;
             cursor: pointer;
         }
+        .switch-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        .switch-btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <button class="switch-btn" onclick="switchChannel()">Switch</button>
         <img class="avatar" id="image" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
         <h1 id="name">Loading...</h1>
         <h2 id="subs" class="odometer">0</h2>
         <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
     </div>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.js"></script>
+    <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/highstock.js"></script>
     <script>
         const searchParams = new URLSearchParams(window.location.search);
-        const id = searchParams.get("id") || "UCX6OQ3DkcsbYNE6H8uQQuVA";
+        let id = searchParams.get("id") || "UCX6OQ3DkcsbYNE6H8uQQuVA";
 
-        setInterval(() => {
+        function fetchData() {
             fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${id}`)
                 .then((res) => res.json())
                 .then((data) => {
@@ -75,11 +95,27 @@
                     document.getElementById("name").textContent = data.snippet.title;
                     document.getElementById("subs").innerHTML = data.estSubCount;
                 });
-        }, 2000);
+        }
+
+        setInterval(fetchData, 2000);
+
+        function switchChannel() {
+            const prompt = window.prompt("Enter channel name, ID, or URL.");
+            if (prompt) {
+                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${prompt}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        searchParams.set("id", data[0].id);
+                        window.location.href = "?" + searchParams.toString();
+                    });
+            }
+        }
 
         function footer() {
             window.location.href = "./../";
         }
+
+        fetchData();  // Initial data fetch
     </script>
 </body>
 </html>
