@@ -75,7 +75,7 @@
 </head>
 <body>
     <div class="container">
-        <button class="switch-btn" onclick="switchChannel()">Switch</button>
+        <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
         <img class="avatar" id="image" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
         <h1 id="name">Loading...</h1>
         <h2 id="subs" class="odometer">0</h2>
@@ -100,9 +100,9 @@
         setInterval(fetchData, 2000);
 
         function switchChannel() {
-            const prompt = window.prompt("Enter channel name, ID, or URL.");
-            if (prompt) {
-                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${prompt}`)
+            const promptText = prompt("Enter channel name, ID, or URL:");
+            if (promptText) {
+                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${promptText}`)
                     .then((res) => res.json())
                     .then((data) => {
                         searchParams.set("id", data[0].id);
