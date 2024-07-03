@@ -21,15 +21,17 @@
         }
         .container {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
             text-align: center;
             padding: 20px;
             background-color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            width: 320px;
-            max-width: 90%;
+            width: 90%;
+            max-width: 800px;
             position: relative;
         }
         .avatar {
@@ -77,18 +79,15 @@
             background-color: #0056b3;
         }
         .chart-container {
-            margin-top: 20px;
             flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
+            text-align: center;
         }
         .chart {
             width: 100%;
-            max-width: 300px; /* Adjust as needed */
+            max-width: 400px; /* Adjust width as needed */
             height: 300px;
             background-color: black;
+            margin-left: auto;
         }
     </style>
 </head>
@@ -96,9 +95,11 @@
     <div class="container">
         <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
         <img class="avatar" id="image" src="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj" alt="Channel Avatar">
-        <h1 id="name">Loading...</h1>
-        <h2 id="subs" class="odometer">0</h2>
-        <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
+        <div>
+            <h1 id="name">Loading...</h1>
+            <h2 id="subs" class="odometer">0</h2>
+            <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
+        </div>
         <div class="chart-container">
             <div id="chart" class="chart"></div>
         </div>
