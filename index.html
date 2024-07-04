@@ -76,12 +76,6 @@
         .switch-btn:hover {
             background-color: #0056b3;
         }
-        .compare-container {
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-            display: none;
-        }
         .compare-btn {
             background-color: #28a745;
             color: #fff;
@@ -96,6 +90,12 @@
         }
         .compare-btn:hover {
             background-color: #218838;
+        }
+        .compare-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
         }
         .compare-label {
             color: #ddd;
@@ -134,6 +134,7 @@
             <h2 id="subs" class="odometer">0</h2>
             <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
             <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
+            <button class="compare-btn" onclick="toggleCompare()">Compare</button>
             <div class="compare-container" id="compare-container">
                 <input type="text" class="compare-input" id="compareInput" placeholder="Enter Channel ID">
                 <button class="compare-btn" onclick="compareChannels()">Compare</button>
@@ -215,8 +216,13 @@
             }
         }
 
-        function footer() {
-            window.location.href = "./../";
+        function toggleCompare() {
+            const compareContainer = document.getElementById("compare-container");
+            if (compareContainer.style.display === "none") {
+                compareContainer.style.display = "block";
+            } else {
+                compareContainer.style.display = "none";
+            }
         }
 
         function compareChannels() {
@@ -225,11 +231,16 @@
                 fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${channelId}`)
                     .then((res) => res.json())
                     .then((data) => {
-                        document.getElementById("compareLabel").textContent = `${data.snippet.title} - ${data.estSubCount} subscribers`;
-                        document.getElementById("compare-container").style.display = "block";
+                        document.getElementById("compareLabel").textContent = `${data.snippet.title} - ${data.estSubCount} Subscribers`;
                     });
             }
         }
+
+        function footer() {
+            window.location.href = "./../";
+        }
+
+        fetchData();  // Initial data fetch
     </script>
 </body>
 </html>
