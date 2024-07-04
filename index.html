@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CheetaryStats - Subscriber Count</title>
+    <title>HuntingStats378 - Compare</title>
     <link href="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.css" rel="stylesheet">
-    <link rel="icon" href="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://huntingstats378.github.io/HuntingStats378/main/images/logo.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <style>
         body {
-            font-family: 'Poppins', Arial, sans-serif;
-            color: var(--fg-color, #fff);
-            background-color: var(--bg-color, #E7541E);
+            font-family: Roboto, Arial, sans-serif;
+            color: #fff;
+            background-color: #E7541E;
             margin: 0;
             padding: 0;
             display: flex;
@@ -20,163 +21,101 @@
             min-height: 100vh;
         }
         .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            flex-wrap: wrap;
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            width: 90%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
             max-width: 800px;
+            width: 100%;
+            padding: 20px;
+        }
+        .channel {
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .channel img {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            margin-top: -5em;
+            object-fit: cover;
             position: relative;
         }
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-top: -60px;
-            border: 4px solid #fff;
-            background-color: #444;
-            object-fit: cover;
-            box-shadow: 0 0 10px rgba(0,0,0,0.4);
-        }
-        h1, h2 {
-            margin: 10px 0;
-            font-weight: 400;
-        }
-        h1 {
-            font-size: 1.8rem;
-        }
-        h2 {
-            font-size: 3.5rem;
-            font-weight: 500;
-        }
-        .subs-footer {
-            margin-top: -20px;
-            font-size: 1.2rem;
-            color: #ddd;
-            cursor: pointer;
-        }
-        .switch-btn {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s;
+        .channel h2 {
             margin-top: 10px;
-        }
-        .switch-btn:hover {
-            background-color: #0056b3;
-        }
-        .compare-btn {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
+            font-size: 4.5vh;
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s;
-            margin-top: 10px;
         }
-        .compare-btn:hover {
-            background-color: #218838;
+        .channel h5 {
+            margin-top: -15px;
         }
-        .compare-container {
+        .gap-container {
             width: 100%;
+            max-width: 400px;
             text-align: center;
             margin-top: 20px;
-            display: none;
+            background-color: #333;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .compare-label {
-            color: #ddd;
-            font-size: 1.2rem;
+        .gap-container h1 {
+            font-size: 3rem;
             margin-top: 10px;
         }
-        .compare-input {
-            margin-top: 10px;
-            width: 80%;
-            max-width: 300px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: #fff;
-        }
-        .chart-container {
-            flex: 1;
-            text-align: center;
-            margin-left: 20px; /* Adjust spacing between subcount and chart */
-        }
-        .chart {
+        #chart-container {
             width: 100%;
-            max-width: 400px; /* Adjust chart width as needed */
-            height: 300px;
-            background-color: black;
+            max-width: 600px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img class="avatar" id="image" src="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj" alt="Channel Avatar">
-        <div>
-            <h1 id="name">Loading...</h1>
-            <h2 id="subs" class="odometer">0</h2>
-            <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
-            <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
-            <button class="compare-btn" onclick="toggleCompare()">Compare</button>
-            <div class="compare-container" id="compare-container">
-                <input type="text" class="compare-input" id="compareInput" placeholder="Enter Channel ID">
-                <button class="compare-btn" onclick="compareChannels()">Compare</button>
-                <p class="compare-label" id="compareLabel">Enter a channel ID above to compare</p>
-            </div>
+        <div class="channel" id="channel1">
+            <img id="image1" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
+            <h2 id="name1" onclick="search1()">Loading</h2>
+            <h2 id="subs1" class="odometer">0</h2>
+            <h5 id="footer1">Subscribers</h5>
         </div>
-        <div class="chart-container">
-            <div id="chart" class="chart"></div>
+        <div class="channel" id="channel2">
+            <img id="image2" src="https://huntingstats378.github.io/HuntingStats378/main/images/default.png" alt="Channel Avatar">
+            <h2 id="name2" onclick="search2()">Loading</h2>
+            <h2 id="subs2" class="odometer">0</h2>
+            <h5 id="footer2">Subscribers</h5>
         </div>
     </div>
+    <div class="gap-container">
+        <h1>Gap:</h1>
+        <h1 id="gap" class="odometer">0</h1>
+    </div>
+    <div id="chart-container"></div>
     <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/odometer.js"></script>
-    <script src="https://huntingstats378.github.io/HuntingStats378/main/assets/ess/highstock.js"></script>
     <script>
-        const searchParams = new URLSearchParams(window.location.search);
-        let id = searchParams.get("id") || "UCX6OQ3DkcsbYNE6H8uQQuVA";
+        const searchParams1 = new URLSearchParams(window.location.search);
+        const id1 = searchParams1.get("id1") || "UCq-Fj5jknLsUf-MWSy4_brA";
+        const searchParams2 = new URLSearchParams(window.location.search);
+        const id2 = searchParams2.get("id2") || "UCX6OQ3DkcsbYNE6H8uQQuVA";
 
-        function fetchData() {
-            fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${id}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    document.getElementById("image").src = data.snippet.thumbnails.high.url;
-                    document.getElementById("name").textContent = data.snippet.title;
-                    document.getElementById("subs").innerHTML = data.estSubCount;
-                    if (chart.series[0].points.length == 1500) chart.series[0].data[0].remove();
-                    chart.series[0].addPoint([Date.now(), data.estSubCount]);
-                });
-        }
-
-        setInterval(fetchData, 2000);
-
-        var chart = Highcharts.chart('chart', {
+        // Initialize Highcharts chart
+        const chart = Highcharts.chart('chart-container', {
             chart: {
                 type: 'line',
                 backgroundColor: 'transparent',
-                plotBorderColor: 'transparent'
+                plotBorderColor: 'transparent',
+                height: 300,
+                style: {
+                    fontFamily: 'Roboto, Arial, sans-serif',
+                    color: '#fff'
+                }
             },
             title: {
-                text: ''
+                text: 'Subscriber Difference Over Time'
             },
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 500,
                 labels: {
                     style: {
                         color: '#bdbdbd'
@@ -185,7 +124,7 @@
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'Subscriber Difference'
                 },
                 labels: {
                     style: {
@@ -193,54 +132,72 @@
                     }
                 }
             },
-            credits: {
-                enabled: false
-            },
             series: [{
-                name: 'Subscribers',
-                color: '#000000',
-                lineColor: '#FFFFFF',
+                name: 'Subscriber Difference',
+                color: '#ffffff',
+                lineColor: '#ffffff',
                 data: []
             }]
         });
 
-        function switchChannel() {
-            const promptText = prompt("Enter channel name, ID, or URL:");
-            if (promptText) {
-                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${promptText}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        searchParams.set("id", data[0].id);
-                        window.location.href = "?" + searchParams.toString();
+        // Function to fetch data and update UI
+        function fetchData() {
+            fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${id1}`)
+                .then(res => res.json())
+                .then(data1 => {
+                    fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${id2}`)
+                        .then(res => res.json())
+                        .then(data2 => {
+                            document.getElementById("image1").src = data1.snippet.thumbnails.high.url;
+                            document.getElementById("name1").textContent = data1.snippet.title;
+                            document.getElementById("subs1").innerHTML = data1.estSubCount;
+                            document.getElementById("image2").src = data2.snippet.thumbnails.high.url;
+                            document.getElementById("name2").textContent = data2.snippet.title;
+                            document.getElementById("subs2").innerHTML = data2.estSubCount;
+                            
+                            const difference = data1.estSubCount - data2.estSubCount;
+                            document.getElementById("gap").innerHTML = difference;
+
+                            // Add point to the chart series
+                            const currentTime = Date.now();
+                            chart.series[0].addPoint([currentTime, difference]);
+
+                            // Remove points beyond 50 data points
+                            if (chart.series[0].points.length > 50) {
+                                chart.series[0].points[0].remove();
+                            }
+                        });
+                });
+        }
+
+        // Fetch data every 2 seconds
+        setInterval(fetchData, 2000);
+
+        // Function to handle channel search for first channel
+        function search1() {
+            const prompt = window.prompt("Enter channel name, ID, or URL.");
+            if (prompt) {
+                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${prompt}`)
+                    .then(res => res.json())
+                    .then(data1 => {
+                        searchParams1.set("id1", data1[0].id);
+                        window.location.href = "?" + searchParams1.toString();
                     });
             }
         }
 
-        function toggleCompare() {
-            const compareContainer = document.getElementById("compare-container");
-            if (compareContainer.style.display === "none") {
-                compareContainer.style.display = "block";
-            } else {
-                compareContainer.style.display = "none";
-            }
-        }
-
-        function compareChannels() {
-            const channelId = document.getElementById("compareInput").value;
-            if (channelId) {
-                fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${channelId}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        document.getElementById("compareLabel").textContent = `${data.snippet.title} - ${data.estSubCount} Subscribers`;
+        // Function to handle channel search for second channel
+        function search2() {
+            const prompt = window.prompt("Enter channel name, ID, or URL.");
+            if (prompt) {
+                fetch(`https://axern.space/api/search?platform=youtube&type=channel&query=${prompt}`)
+                    .then(res => res.json())
+                    .then(data2 => {
+                        searchParams2.set("id2", data2[0].id);
+                        window.location.href = "?" + searchParams2.toString();
                     });
             }
         }
-
-        function footer() {
-            window.location.href = "./../";
-        }
-
-        fetchData();  // Initial data fetch
     </script>
 </body>
 </html>
