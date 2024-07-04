@@ -62,9 +62,6 @@
             cursor: pointer;
         }
         .switch-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             background-color: #007BFF;
             color: #fff;
             border: none;
@@ -74,9 +71,47 @@
             font-size: 1rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
         .switch-btn:hover {
             background-color: #0056b3;
+        }
+        .compare-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .compare-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .compare-btn:hover {
+            background-color: #218838;
+        }
+        .compare-label {
+            color: #ddd;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .compare-input {
+            margin-top: 10px;
+            width: 80%;
+            max-width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #fff;
         }
         .chart-container {
             flex: 1;
@@ -93,12 +128,17 @@
 </head>
 <body>
     <div class="container">
-        <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
         <img class="avatar" id="image" src="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj" alt="Channel Avatar">
         <div>
             <h1 id="name">Loading...</h1>
             <h2 id="subs" class="odometer">0</h2>
             <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
+            <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
+            <div class="compare-container" id="compare-container">
+                <input type="text" class="compare-input" id="compareInput" placeholder="Enter Channel ID">
+                <button class="compare-btn" onclick="compareChannels()">Compare</button>
+                <p class="compare-label" id="compareLabel">Enter a channel ID above to compare</p>
+            </div>
         </div>
         <div class="chart-container">
             <div id="chart" class="chart"></div>
@@ -179,7 +219,17 @@
             window.location.href = "./../";
         }
 
-        fetchData();  // Initial data fetch
+        function compareChannels() {
+            const channelId = document.getElementById("compareInput").value;
+            if (channelId) {
+                fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${channelId}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        document.getElementById("compareLabel").textContent = `${data.snippet.title} - ${data.estSubCount} subscribers`;
+                        document.getElementById("compare-container").style.display = "block";
+                    });
+            }
+        }
     </script>
 </body>
 </html>
