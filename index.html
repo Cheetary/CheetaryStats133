@@ -61,7 +61,7 @@
             color: #ddd;
             cursor: pointer;
         }
-        .switch-btn {
+        .switch-btn, .compare-btn, .fysc-btn {
             background-color: #007BFF;
             color: #fff;
             border: none;
@@ -78,18 +78,15 @@
         }
         .compare-btn {
             background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s;
-            margin-top: 10px;
         }
         .compare-btn:hover {
             background-color: #218838;
+        }
+        .fysc-btn {
+            background-color: #e83e8c;
+        }
+        .fysc-btn:hover {
+            background-color: #c82373;
         }
         .compare-container {
             width: 100%;
@@ -134,10 +131,11 @@
             <h2 id="subs" class="odometer">0</h2>
             <h5 class="subs-footer" onclick="footer()">Subscribers</h5>
             <button class="switch-btn" onclick="switchChannel()">Switch Channel</button>
-            <button class="compare-btn" onclick="toggleCompare()">Compare</button>
+            <button class="compare-btn" onclick="compareChannels()">Compare</button>
+            <button class="fysc-btn" onclick="toggleFYSCMode()">FYSC Mode</button>
             <div class="compare-container" id="compare-container">
                 <input type="text" class="compare-input" id="compareInput" placeholder="Enter Channel ID">
-                <button class="compare-btn" onclick="compareChannels()">Compare</button>
+                <button class="compare-btn" onclick="addComparison()">Add Comparison</button>
                 <p class="compare-label" id="compareLabel">Enter a channel ID above to compare</p>
             </div>
         </div>
@@ -150,6 +148,7 @@
     <script>
         const searchParams = new URLSearchParams(window.location.search);
         let id = searchParams.get("id") || "UCX6OQ3DkcsbYNE6H8uQQuVA";
+        let currentSubCount = 0;
 
         function fetchData() {
             fetch(`https://nia-statistics.com/api/get?platform=youtube&type=channel&id=${id}`)
@@ -158,8 +157,9 @@
                     document.getElementById("image").src = data.snippet.thumbnails.high.url;
                     document.getElementById("name").textContent = data.snippet.title;
                     document.getElementById("subs").innerHTML = data.estSubCount;
+                    currentSubCount = parseInt(data.estSubCount); // Convert to integer
                     if (chart.series[0].points.length == 1500) chart.series[0].data[0].remove();
-                    chart.series[0].addPoint([Date.now(), data.estSubCount]);
+                    chart.series[0].addPoint([Date.now(), currentSubCount]);
                 });
         }
 
@@ -216,15 +216,6 @@
             }
         }
 
-        function toggleCompare() {
-            const compareContainer = document.getElementById("compare-container");
-            if (compareContainer.style.display === "none") {
-                compareContainer.style.display = "block";
-            } else {
-                compareContainer.style.display = "none";
-            }
-        }
-
         function compareChannels() {
             const channelId = document.getElementById("compareInput").value;
             if (channelId) {
@@ -236,12 +227,21 @@
             }
         }
 
+        function addComparison() {
+            const channelId = document.getElementById("compareInput").value;
+            if (channelId) {
+                const compareUrl = `compare.html?id1=${id}&id2=${channelId}`;
+                window.location.href = compareUrl;
+            }
+        }
+
+        function toggleFYSCMode() {
+            alert('FYSC Mode activated!');
+        }
+
         function footer() {
             window.location.href = "./../";
         }
-
-        fetchData();  // Initial data fetch
     </script>
 </body>
 </html>
-
