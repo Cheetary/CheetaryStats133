@@ -121,10 +121,42 @@
             height: 300px;
             background-color: black;
         }
+
+        /* FYSC Mode Styles */
+        .fysc-mode {
+            background-color: #fff;
+            color: #333;
+        }
+        .fysc-mode .container {
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .fysc-mode .avatar {
+            border-color: #333;
+        }
+        .fysc-mode h1, .fysc-mode h2 {
+            color: #333;
+        }
+        .fysc-mode .subs-footer {
+            color: #666;
+        }
+        .fysc-mode .switch-btn, .fysc-mode .compare-btn, .fysc-mode .fysc-btn {
+            background-color: #333;
+            color: #fff;
+        }
+        .fysc-mode .switch-btn:hover {
+            background-color: #555;
+        }
+        .fysc-mode .compare-btn:hover {
+            background-color: #555;
+        }
+        .fysc-mode .fysc-btn:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="main-container">
         <img class="avatar" id="image" src="https://yt3.ggpht.com/nI5C3yeKkvufYZDr3kHOBktuGJWzqbuoR2jj9z83XMX1rzaCQZUppK-sLksoYt-aJ0dIySBNDQ=s800-c-k-c0x00ffffff-no-rj" alt="Channel Avatar">
         <div>
             <h1 id="name">Loading...</h1>
@@ -236,7 +268,7 @@
         }
 
         function toggleFYSCMode() {
-            alert('FYSC Mode activated!');
+            document.body.classList.toggle('fysc-mode');
         }
 
         function footer() {
